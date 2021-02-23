@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,20 @@ namespace AllouFinalPro.Areas.Administrator.Controllers
     {
         public IActionResult Index()
         {
-            return View();
-        }
+            if (HttpContext.Session.GetString("Name") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
 
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Account", new { area = "" });
+        }
     }
 }

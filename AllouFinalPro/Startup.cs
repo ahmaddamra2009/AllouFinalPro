@@ -30,6 +30,7 @@ namespace AllouFinalPro
 
                 options.UseSqlServer(Configuration.GetConnectionString("constr"));
             });
+            services.AddSession(x => x.IdleTimeout = TimeSpan.FromSeconds(20));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +50,7 @@ namespace AllouFinalPro
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
